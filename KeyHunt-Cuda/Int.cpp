@@ -1236,8 +1236,8 @@ std::string Int::GetBase16() {
 
 std::string Int::GetBlockStr() {
 
-	char tmp[256];
-	char bStr[256];
+	char tmp[256]= {0};
+	char bStr[256]= {0};
 	tmp[0] = 0;
 	for (int i = NB32BLOCK - 3; i >= 0; i--) {
 		sprintf(bStr, "%08X", bits[i]);
@@ -1251,8 +1251,8 @@ std::string Int::GetBlockStr() {
 
 std::string Int::GetC64Str(int nbDigit) {
 
-	char tmp[256];
-	char bStr[256];
+	char tmp[256] = {0};
+	char bStr[256] = {0};
 	tmp[0] = '{';
 	tmp[1] = 0;
 	for (int i = 0; i < nbDigit; i++) {

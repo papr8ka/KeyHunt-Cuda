@@ -483,8 +483,8 @@ __device__ __noinline__ void _GetHash160Comp(uint64_t* x, uint8_t isOdd, uint8_t
 {
 
 	uint32_t* x32 = (uint32_t*)(x);
-	uint32_t publicKeyBytes[16];
-	uint32_t s[16];
+	uint32_t publicKeyBytes[16] = {0};
+	uint32_t s[16] = {0};
 
 	// Compressed public key
 	publicKeyBytes[0] = __byte_perm(x32[7], 0x2 + isOdd, 0x4321);
@@ -525,9 +525,9 @@ __device__ __noinline__ void _GetHash160CompSym(uint64_t* x, uint8_t* h1, uint8_
 {
 
 	uint32_t* x32 = (uint32_t*)(x);
-	uint32_t publicKeyBytes[16];
-	uint32_t publicKeyBytes2[16];
-	uint32_t s[16];
+	uint32_t publicKeyBytes[16] = {0};
+	uint32_t publicKeyBytes2[16] = {0};
+	uint32_t s[16] = {0};
 
 	// Compressed public key
 
@@ -592,8 +592,8 @@ __device__ __noinline__ void _GetHash160(uint64_t* x, uint64_t* y, uint8_t* hash
 
 	uint32_t* x32 = (uint32_t*)(x);
 	uint32_t* y32 = (uint32_t*)(y);
-	uint32_t publicKeyBytes[32];
-	uint32_t s[16];
+	uint32_t publicKeyBytes[32] = {0};
+	uint32_t s[16] = {0};
 
 	// Uncompressed public key
 	publicKeyBytes[0] = __byte_perm(x32[7], 0x04, 0x4321);
@@ -650,9 +650,9 @@ __device__ __noinline__ void _GetHash160(uint64_t* x, uint64_t* y, uint8_t* hash
 __device__ __noinline__ void _GetHash160P2SHComp(uint64_t* x, uint8_t isOdd, uint8_t* hash)
 {
 
-	uint32_t h[5];
-	uint32_t scriptBytes[16];
-	uint32_t s[16];
+	uint32_t h[5] = {0};
+	uint32_t scriptBytes[16] = {0};
+	uint32_t s[16] = {0};
 	_GetHash160Comp(x, isOdd, (uint8_t*)h);
 
 	// P2SH script script
@@ -693,9 +693,9 @@ __device__ __noinline__ void _GetHash160P2SHComp(uint64_t* x, uint8_t isOdd, uin
 __device__ __noinline__ void _GetHash160P2SHUncomp(uint64_t* x, uint64_t* y, uint8_t* hash)
 {
 
-	uint32_t h[5];
-	uint32_t scriptBytes[16];
-	uint32_t s[16];
+	uint32_t h[5] = {0};
+	uint32_t scriptBytes[16] = {0};
+	uint32_t s[16] = {0};
 	_GetHash160(x, y, (uint8_t*)h);
 
 	// P2SH script script
@@ -762,7 +762,7 @@ __device__ __constant__ uint64_t _KECCAKF_RNDC[24] = {
 
 __device__ __noinline__ void _GetHashKeccak160(uint64_t* x, uint64_t* y, uint32_t* hash)
 {
-	_KECCAK_STATE e;
+	_KECCAK_STATE e = {0};
 	uint32_t* X = (uint32_t*)x;
 	uint32_t* Y = (uint32_t*)y;
 	e.q[8] = 0; e.q[9] = 0; 

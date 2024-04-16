@@ -89,7 +89,7 @@ private:
 	Secp256K1* secp;
 	Bloom* bloom;
 
-	uint64_t counters[256];
+	uint64_t counters[256] = {0};
 	double startTime;
 
 	int compMode;

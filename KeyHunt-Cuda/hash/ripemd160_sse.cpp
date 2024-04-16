@@ -105,7 +105,7 @@ void Transform(__m128i *s, uint8_t *blk[4])
     __m128i d2 = d1;
     __m128i e2 = e1;
     __m128i u;
-    __m128i w[16];
+    __m128i w[16] = {0};
 
 
     w[0] = LOADW(0);
@@ -367,18 +367,18 @@ void ripemd160sse_32(
 void ripemd160sse_test()
 {
 
-    unsigned char h0[20];
-    unsigned char h1[20];
-    unsigned char h2[20];
-    unsigned char h3[20];
-    unsigned char ch0[20];
-    unsigned char ch1[20];
-    unsigned char ch2[20];
-    unsigned char ch3[20];
-    unsigned char m0[64];
-    unsigned char m1[64];
-    unsigned char m2[64];
-    unsigned char m3[64];
+    unsigned char h0[20] = {0};
+    unsigned char h1[20] = {0};
+    unsigned char h2[20] = {0};
+    unsigned char h3[20] = {0};
+    unsigned char ch0[20] = {0};
+    unsigned char ch1[20] = {0};
+    unsigned char ch2[20] = {0};
+    unsigned char ch3[20] = {0};
+    unsigned char m0[64] = {0};
+    unsigned char m1[64] = {0};
+    unsigned char m2[64] = {0};
+    unsigned char m3[64] = {0};
 
     strcpy((char *)m0, "This is a test message to test01");
     strcpy((char *)m1, "This is a test message to test02");

@@ -68,7 +68,7 @@ void Transform(uint32_t *s, const unsigned char *chunk)
 {
     uint32_t a1 = s[0], b1 = s[1], c1 = s[2], d1 = s[3], e1 = s[4];
     uint32_t a2 = a1, b2 = b1, c2 = c1, d2 = d1, e2 = e1;
-    uint32_t w[16];
+    uint32_t w[16] = {0};
     memcpy(w, chunk, 16 * sizeof(uint32_t));
 
     R11(a1, b1, c1, d1, e1, w[0], 11);
@@ -312,7 +312,7 @@ void ripemd160(unsigned char *input, int length, unsigned char *digest)
 std::string ripemd160_hex(unsigned char *digest)
 {
 
-    char buf[2 * 20 + 1];
+    char buf[2 * 20 + 1] = {0};
     buf[2 * 20] = 0;
     for (int i = 0; i < 20; i++)
         sprintf(buf + i * 2, "%02x", (int)digest[i]);

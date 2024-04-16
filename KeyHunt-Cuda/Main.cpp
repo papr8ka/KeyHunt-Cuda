@@ -192,6 +192,17 @@ void CtrlHandler(int signum) {
 }
 #endif
 
+void generateRandomStart(Int& start)
+{
+    char value[64+1] = "0000000000000000000000000000000000000000000000000000000000000000";
+    char charset[16+1] = "0123456789ABCDEF";
+
+    for (int i = 0; i < 64; i++)
+        value[i] = charset[rndl()%16];
+
+    start.SetBase16(value);
+}
+
 int main(int argc, char** argv)
 {
 	// Global Init
@@ -590,25 +601,40 @@ int main(int argc, char** argv)
 	}
 #else
 	signal(SIGINT, CtrlHandler);
-	KeyHunt* v;
-	switch (searchMode) {
-	case (int)SEARCH_MODE_MA:
-	case (int)SEARCH_MODE_MX:
-		v = new KeyHunt(inputFile, compMode, searchMode, coinType, gpuEnable, outputFile, useSSE,
-			maxFound, rKey, rangeStart.GetBase16(), rangeEnd.GetBase16(), should_exit);
-		break;
-	case (int)SEARCH_MODE_SA:
-	case (int)SEARCH_MODE_SX:
-		v = new KeyHunt(hashORxpoint, compMode, searchMode, coinType, gpuEnable, outputFile, useSSE,
-			maxFound, rKey, rangeStart.GetBase16(), rangeEnd.GetBase16(), should_exit);
-		break;
-	default:
-		printf("\n\nNothing to do, exiting\n");
-		return 0;
-		break;
-	}
-	v->Search(nbCPUThread, gpuId, gridSize, should_exit);
-	delete v;
+    while(true) {
+        Int start = Int();
+        Int end = Int();
+        //start.SetBase16("41E962979B392D8D279F9388C094FA43E3E13D9E3CFEE8A44DE7BAF5ADA39F3C");
+        generateRandomStart(start);
+        Int size = Int(0x8000000000);
+        end.Set(&start);
+        end.Add(&size);
+        KeyHunt *v = new KeyHunt(inputFile, compMode, searchMode, coinType, gpuEnable, outputFile, useSSE,
+                        maxFound, rKey, start.GetBase16(), end.GetBase16(), should_exit);
+        v->Search(nbCPUThread, gpuId, gridSize, should_exit);
+        delete v;
+    }
+
+	//switch (searchMode) {
+	//case (int)SEARCH_MODE_MA:
+	//case (int)SEARCH_MODE_MX:
+    //    //Int start = Int();
+    //    start.SetBase16()
+    //    printf("====> %s\n", rangeStart.GetBase16().c_str());
+	//	v = new KeyHunt(inputFile, compMode, searchMode, coinType, gpuEnable, outputFile, useSSE,
+	//		maxFound, rKey, rangeStart.GetBase16(), rangeEnd.GetBase16(), should_exit);
+	//	break;
+	//case (int)SEARCH_MODE_SA:
+	//case (int)SEARCH_MODE_SX:
+	//	v = new KeyHunt(hashORxpoint, compMode, searchMode, coinType, gpuEnable, outputFile, useSSE,
+	//		maxFound, rKey, rangeStart.GetBase16(), rangeEnd.GetBase16(), should_exit);
+	//	break;
+	//default:
+	//	printf("\n\nNothing to do, exiting\n");
+	//	return 0;
+	//	break;
+	//}
+
 	return 0;
 #endif
 }

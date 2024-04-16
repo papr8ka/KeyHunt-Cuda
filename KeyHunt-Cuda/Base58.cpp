@@ -38,7 +38,7 @@ static const int8_t b58digits_map[] = {
 bool DecodeBase58(const char *psz, std::vector<uint8_t> &vch)
 {
 
-    uint8_t digits[256];
+    uint8_t digits[256] = {0};
 
     // Skip and count leading '1'
     int zeroes = 0;
@@ -93,7 +93,7 @@ std::string EncodeBase58(const unsigned char *pbegin, const unsigned char *pend)
 {
 
     std::string ret;
-    unsigned char digits[256];
+    unsigned char digits[256] = {0};
 
     // Skip leading zeroes
     while (pbegin != pend && *pbegin == 0) {

@@ -92,7 +92,7 @@ inline uint64_t _rotr64(uint64_t x, uint8_t r)
 static void Transform(uint64_t state[8], const uint8_t buf[128])
 {
 
-    uint64_t W[80], t;
+    uint64_t W[80] = {0}, t;
     uint64_t a, b, c, d, e, f, g, h;
     int i;
 
@@ -183,6 +183,7 @@ void CSHA512::Initialize()
 
     buffSize = 0;
     count = 0;
+    memset(buf, 0, 128);
     s[0] = 0x6a09e667f3bcc908ULL;
     s[1] = 0xbb67ae8584caa73bULL;
     s[2] = 0x3c6ef372fe94f82bULL;

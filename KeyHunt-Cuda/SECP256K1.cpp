@@ -472,7 +472,7 @@ Point Secp256K1::ParsePublicKeyHex(std::string str, bool& isCompressed)
 std::string Secp256K1::GetPublicKeyHex(bool compressed, Point& pubKey)
 {
 
-	unsigned char publicKeyBytes[128];
+	unsigned char publicKeyBytes[128] = {0};
 	char tmp[3];
 	std::string ret;
 
@@ -575,9 +575,9 @@ void Secp256K1::GetXBytes(bool compressed, Point& pubKey, unsigned char* publicK
 void Secp256K1::GetHash160(bool compressed, Point& pubKey, unsigned char* hash)
 {
 
-	unsigned char shapk[64];
+	unsigned char shapk[64]={0};
 
-	unsigned char publicKeyBytes[128];
+	unsigned char publicKeyBytes[128]={0};
 
 	if (!compressed) {
 
@@ -733,8 +733,7 @@ std::string Secp256K1::GetAddressETH(unsigned char* hash)
 
 std::string Secp256K1::GetAddress(bool compressed, Point& pubKey)
 {
-
-	unsigned char address[25];
+	unsigned char address[25] = {0};
 
 	address[0] = 0x00;
 

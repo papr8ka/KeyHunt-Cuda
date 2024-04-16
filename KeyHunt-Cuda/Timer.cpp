@@ -143,7 +143,7 @@ uint32_t Timer::getSeed32()
 std::string Timer::getResult(const char *unit, int nbTry, double t0, double t1)
 {
 
-    char tmp[256];
+    char tmp[256] = {0};
     int pIdx = 0;
     double nbCallPerSec = (double)nbTry / (t1 - t0);
     while (nbCallPerSec > 1000.0 && pIdx < 5) {

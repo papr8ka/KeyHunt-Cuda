@@ -585,18 +585,18 @@ void sha256sse_checksum(uint32_t *i0, uint32_t *i1, uint32_t *i2, uint32_t *i3,
 void sha256sse_test()
 {
 
-    unsigned char h0[32];
-    unsigned char h1[32];
-    unsigned char h2[32];
-    unsigned char h3[32];
-    unsigned char ch0[32];
-    unsigned char ch1[32];
-    unsigned char ch2[32];
-    unsigned char ch3[32];
-    unsigned char m0[64];
-    unsigned char m1[64];
-    unsigned char m2[64];
-    unsigned char m3[64];
+    unsigned char h0[32] = {0};
+    unsigned char h1[32] = {0};
+    unsigned char h2[32] = {0};
+    unsigned char h3[32] = {0};
+    unsigned char ch0[32] = {0};
+    unsigned char ch1[32] = {0};
+    unsigned char ch2[32] = {0};
+    unsigned char ch3[32] = {0};
+    unsigned char m0[64] = {0};
+    unsigned char m1[64] = {0};
+    unsigned char m2[64] = {0};
+    unsigned char m3[64] = {0};
 
     strcpy((char *)m0, "This is a test message to test 01");
     strcpy((char *)m1, "This is a test message to test 02");

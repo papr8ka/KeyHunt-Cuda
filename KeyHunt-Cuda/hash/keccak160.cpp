@@ -29,7 +29,7 @@ const uint64_t _KECCAKF_RNDC[24] = {
 
 void keccak160(uint64_t* x, uint64_t* y, uint32_t* hash)
 {
-	_KECCAK_STATE e;
+	_KECCAK_STATE e = {0};
 	memset(&e, 0, 200);
 	uint32_t* X = (uint32_t*)x;
 	uint32_t* Y = (uint32_t*)y;

@@ -173,9 +173,9 @@ void Transform(uint32_t *s, const unsigned char *chunk)
 void Transform2(uint32_t *s, const unsigned char *chunk)
 {
 
-    uint32_t t1;
-    uint32_t t2;
-    uint32_t w0, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15;
+    uint32_t t1=0;
+    uint32_t t2=0;
+    uint32_t w0=0, w1=0, w2=0, w3=0, w4=0, w5=0, w6=0, w7=0, w8=0, w9=0, w10=0, w11=0, w12=0, w13=0, w14=0, w15=0;
 
     uint32_t a = 0x6a09e667ul;
     uint32_t b = 0xbb67ae85ul;
@@ -376,6 +376,7 @@ public:
 CSHA256::CSHA256()
 {
     bytes = 0;
+    memset(buf, 0, 64);
     s[0] = 0x6a09e667ul;
     s[1] = 0xbb67ae85ul;
     s[2] = 0x3c6ef372ul;
@@ -413,7 +414,7 @@ void CSHA256::Write(const unsigned char *data, size_t len)
 
 void CSHA256::Finalize(unsigned char hash[OUTPUT_SIZE])
 {
-    unsigned char sizedesc[8];
+    unsigned char sizedesc[8] = {0};
     WRITEBE64(sizedesc, bytes << 3);
     Write(_sha256::pad, 1 + ((119 - (bytes % 64)) % 64));
     Write(sizedesc, 8);
@@ -443,7 +444,7 @@ const uint8_t sizedesc_65[8] = { 0, 0, 0, 0, 0, 0, 2, 8 };
 void sha256_33(unsigned char *input, unsigned char *digest)
 {
 
-    uint32_t s[8];
+    uint32_t s[8]={0};
 
     _sha256::Initialize(s);
     memcpy(input + 33, _sha256::pad, 23);
@@ -465,7 +466,7 @@ void sha256_33(unsigned char *input, unsigned char *digest)
 void sha256_65(unsigned char *input, unsigned char *digest)
 {
 
-    uint32_t s[8];
+    uint32_t s[8]={0};
 
     memcpy(input + 65, _sha256::pad, 55);
     memcpy(input + 120, sizedesc_65, 8);
@@ -488,8 +489,8 @@ void sha256_65(unsigned char *input, unsigned char *digest)
 void sha256_checksum(uint8_t *input, int length, uint8_t *checksum)
 {
 
-    uint32_t s[8];
-    uint8_t b[64];
+    uint32_t s[8]={0};
+    uint8_t b[64]={0};
     memcpy(b, input, length);
     memcpy(b + length, _sha256::pad, 56 - length);
     WRITEBE64(b + 56, length << 3);
@@ -501,7 +502,7 @@ void sha256_checksum(uint8_t *input, int length, uint8_t *checksum)
 std::string sha256_hex(unsigned char *digest)
 {
 
-    char buf[2 * 32 + 1];
+    char buf[2 * 32 + 1] = {0};
     buf[2 * 32] = 0;
     for (int i = 0; i < 32; i++)
         sprintf(buf + i * 2, "%02x", digest[i]);
