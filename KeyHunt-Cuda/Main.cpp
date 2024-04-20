@@ -601,19 +601,30 @@ int main(int argc, char** argv)
 	}
 #else
 	signal(SIGINT, CtrlHandler);
+
+    Int start = Int();
+    Int end = Int();
+
+    //start.SetBase16("41E962979B392D8D279F9388C094FA43E3E13D9E3CFEE8A44DE7BAF5ADA39F3C");
+    generateRandomStart(start);
+
+    Int size = Int((int64_t )0x8000000000);
+
+    end.Set(&start);
+    end.Add(&size);
+
+    KeyHunt *v = new KeyHunt(inputFile, compMode, searchMode, coinType, gpuEnable, outputFile, useSSE,
+         maxFound, 0, start.GetBase16(), end.GetBase16(), should_exit);
     while(true) {
-        Int start = Int();
-        Int end = Int();
-        //start.SetBase16("41E962979B392D8D279F9388C094FA43E3E13D9E3CFEE8A44DE7BAF5ADA39F3C");
+        v->Search(nbCPUThread, gpuId, gridSize, should_exit);
+
         generateRandomStart(start);
-        Int size = Int(0x8000000000);
         end.Set(&start);
         end.Add(&size);
-        KeyHunt *v = new KeyHunt(inputFile, compMode, searchMode, coinType, gpuEnable, outputFile, useSSE,
-                        maxFound, rKey, start.GetBase16(), end.GetBase16(), should_exit);
-        v->Search(nbCPUThread, gpuId, gridSize, should_exit);
-        delete v;
+
+        v->UpdateRange(start, end);
     }
+    delete v;
 
 	//switch (searchMode) {
 	//case (int)SEARCH_MODE_MA:

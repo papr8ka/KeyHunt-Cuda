@@ -45,6 +45,8 @@ public:
 
 	~KeyHunt();
 
+    void UpdateRange(Int& start, Int& end);
+
 	void Search(int nbThread, std::vector<int> gpuId, std::vector<int> gridSize, bool& should_exit);
 	void FindKeyCPU(TH_PARAM* p);
 	void FindKeyGPU(TH_PARAM* p);

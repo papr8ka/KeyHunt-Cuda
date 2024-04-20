@@ -1085,6 +1085,21 @@ void KeyHunt::SetupRanges(uint32_t totalThreads)
 
 // ----------------------------------------------------------------------------
 
+void KeyHunt::UpdateRange(Int& start, Int& end)
+{
+    this->rangeStart = start;
+    this->rangeEnd = end;
+    this->rangeDiff2.Set(&this->rangeEnd);
+    this->rangeDiff2.Sub(&this->rangeStart);
+    this->lastrKey = 0;
+
+    delete secp;
+    secp = new Secp256K1();
+    secp->Init();
+
+    InitGenratorTable();
+}
+
 void KeyHunt::Search(int nbThread, std::vector<int> gpuId, std::vector<int> gridSize, bool& should_exit)
 {
 
